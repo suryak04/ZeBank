@@ -253,12 +253,11 @@ public class AccountService {
             thePreparedStatement = dbCon.prepareStatement(qry);
             thePreparedStatement.setString(1,accountId);
             theResultSet = thePreparedStatement.executeQuery();
-            System.out.println("Account id \t Debit \t Credit \t Balance");
+            System.out.println("Account id \t Debit \t Credit");
             while (theResultSet.next()){
                 System.out.println(theResultSet.getString(1)+"\t"+
                         theResultSet.getDouble(2)+"\t"+
-                        theResultSet.getDouble(3)+"\t"+
-                        theResultSet.getDouble(4));
+                        theResultSet.getDouble(3));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -268,14 +267,14 @@ public class AccountService {
 
     public void addTransaction(String accountId, Double debit, Double credit) throws Exception{
 
-        qry = "insert into zebank_trans(account_id, debit, credit, balance) values(?, ?, ?, ?)";
+        qry = "insert into zebank_trans(account_id, debit, credit) values(?, ?, ?)";
         Double balance = getBalance(accountId);
         try {
             thePreparedStatement = dbCon.prepareStatement(qry);
             thePreparedStatement.setString(1,accountId);
             thePreparedStatement.setDouble(2,debit);
             thePreparedStatement.setDouble(3,credit);
-            thePreparedStatement.setDouble(4,balance);
+//            thePreparedStatement.setDouble(4,balance);
 
             thePreparedStatement.executeUpdate();
         }
